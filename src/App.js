@@ -1,22 +1,47 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import cancion from './cancion.mp3';
 
 function App() {
+  const [fireworks, setFireworks] = useState([]);
+
+  useEffect(() => {
+    const audio = new Audio(cancion);
+    audio.play();
+  }, []);
+
+  const handleClick = (e) => {
+    const newFirework = {
+      id: Date.now(),
+      top: e.clientY,
+      left: e.clientX,
+    };
+    setFireworks((prevFireworks) => [...prevFireworks, newFirework]);
+
+    // Remove the firework after some time
+    setTimeout(() => {
+      setFireworks((prevFireworks) =>
+        prevFireworks.filter((fw) => fw.id !== newFirework.id)
+      );
+    }, 2000);
+  };
+
+  const hearts = Array.from({ length: 10 }, (_, i) => <div key={i} className="heart"></div>);
+
   return (
-    <div className="App">
+    <div className="App" onClick={handleClick}>
+      {hearts}
+      {fireworks.map((fw) => (
+        <div
+          key={fw.id}
+          className="firework"
+          style={{ top: fw.top, left: fw.left }}
+        ></div>
+      ))}
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          va a ser la prueba de cumpleaños
+        <p className="custom-message bounce">
+          ¡Feliz cumpleaños!
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );

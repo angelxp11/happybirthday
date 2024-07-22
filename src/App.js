@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import cancion from './cancion.mp3';
+import { FaPlay, FaPause, FaStepBackward, FaStepForward } from 'react-icons/fa';
 
 function App() {
   const [fireworks, setFireworks] = useState([]);
-
-  useEffect(() => {
-    const audio = new Audio(cancion);
-    audio.play();
-  }, []);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
 
   const handleClick = (e) => {
     const newFirework = {
@@ -26,6 +24,29 @@ function App() {
     }, 2000);
   };
 
+  const handlePlayPause = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const handleRewind = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime -= 10; // Rewind by 10 seconds
+    }
+  };
+
+  const handleForward = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime += 10; // Forward by 10 seconds
+    }
+  };
+
   const hearts = Array.from({ length: 10 }, (_, i) => <div key={i} className="heart"></div>);
 
   return (
@@ -40,8 +61,20 @@ function App() {
       ))}
       <header className="App-header">
         <p className="custom-message bounce">
-          ¡Feliz 😍 cumpleaños!
+          ¡Feliz cumpleaños!
         </p>
+        <div className="player-controls">
+          <button onClick={handleRewind} className="control-button">
+            <FaStepBackward />
+          </button>
+          <button onClick={handlePlayPause} className="control-button">
+            {isPlaying ? <FaPause /> : <FaPlay />}
+          </button>
+          <button onClick={handleForward} className="control-button">
+            <FaStepForward />
+          </button>
+        </div>
+        <audio ref={audioRef} src={cancion} />
       </header>
     </div>
   );

@@ -94,3 +94,27 @@ body {
   animation: fireworks 2s infinite;
   z-index: 0;
 }
+
+/* Style for the player controls */
+.player-controls {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.control-button {
+  background: #ffffff;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  margin: 0 10px;
+  font-size: 1.5em;
+  color: #000000;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.control-button:hover {
+  background-color: #f0f0f0;
+  color: #ff1493;
+}

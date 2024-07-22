@@ -40,7 +40,7 @@ function App() {
       ))}
       <header className="App-header">
         <p className="custom-message bounce">
-          ¡Feliz cumpleaños!
+          ¡Feliz 😍 cumpleaños!
         </p>
       </header>
     </div>

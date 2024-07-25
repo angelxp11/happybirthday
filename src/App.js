@@ -96,7 +96,7 @@ function App() {
     return lines.join('\n');
   };
   
-  const message = "¡Feliz cumpleaños Mami! Hicimos este proyecto Espero que te guste esto, lo hicimos con mucho cariño, que mi dios nos la bendiga hoy mañana y siempre para verle siempre con esa sonrisa tan bella que siempre tiene, gracias por ser nuestra mami y nuestra gran heroina, te amamos mami y te mandamos un gran abrazo a la distancia  y esperamos que tengaun día maravilloso lleno de alegría y sorpresas. 🎉            Att Haisslin, Deanyela y Jose.";
+  const message = "¡Feliz cumpleaños, Mami! Hicimos este proyecto con mucho cariño, esperando que te guste. Que Dios te bendiga hoy, mañana y siempre, para verte siempre con esa sonrisa tan bella que siempre tienes. Gracias por ser nuestra mami y nuestra gran heroína. Te amamos mucho y te enviamos un gran abrazo a la distancia. Esperamos que tengas un día maravilloso, lleno de alegría y sorpresas. 🎉           Att Haisslin, Deanyela y Jose.";
   const formattedMessage = formatMessage(message);
   
 

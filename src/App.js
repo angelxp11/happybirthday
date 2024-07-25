@@ -23,7 +23,7 @@ import img17 from './imagenes/img17.jpg';
 import img18 from './imagenes/img18.jpg';
 
 const allImages = [
-  img1, img2, img3, img4, img5, img6, img7, img8, img9, 
+  img1, img2, img3, img4, img5, img6, img7, img8, img9,
   img10, img11, img12, img13, img14, img15, img16, img17, img18
 ];
 
@@ -31,62 +31,107 @@ function App() {
   const [currentImages, setCurrentImages] = useState(Array(9).fill(null));
   const [visible, setVisible] = useState(Array(9).fill(false));
   const [firstImage, setFirstImage] = useState(true);
+  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
-    // Mostrar imágenes después de 2 segundos
     const timer = setTimeout(() => {
       updateImages(true);
       const interval = setInterval(() => {
         updateImages();
-      }, 10000); // Cambiar imágenes cada 10 segundos (5s fadeIn + 5s visible + 5s fadeOut)
+      }, 15000); // Intervalo total de 15 segundos
 
       return () => clearInterval(interval);
-    }, 2000); // Esperar 2 segundos antes de comenzar la animación
+    }, 2000); // Esperar 2 segundos antes de mostrar las primeras imágenes
 
     return () => clearTimeout(timer);
   }, []);
 
   const updateImages = (initial = false) => {
-    // Seleccionar 9 imágenes únicas al azar
     const shuffledImages = [...allImages].sort(() => Math.random() - 0.5);
     const newImages = shuffledImages.slice(0, 9);
 
     if (initial) {
       setCurrentImages(newImages);
-      setVisible(Array(9).fill(true)); // Mostrar nuevas imágenes inmediatamente
+      setVisible(Array(9).fill(true));
     } else {
-      setVisible(Array(9).fill(false)); // Ocultar todas las imágenes antes de actualizar
+      setVisible(Array(9).fill(false));
       setTimeout(() => {
         setCurrentImages(newImages);
-        setVisible(Array(9).fill(true)); // Mostrar nuevas imágenes después de un breve retraso
-        setFirstImage(false); // Desactivar la bandera para la primera imagen
-      }, 5000); // Esperar 5 segundos para fadeOut antes de actualizar
+        setVisible(Array(9).fill(true));
+        setFirstImage(false);
+      }, 5000); // Tiempo de transición antes de mostrar nuevas imágenes
     }
   };
+  
+
+  const handleShowMessage = () => {
+    setShowMessage(true);
+  };
+
+  const handleCloseMessage = () => {
+    setShowMessage(false);
+  };
+
+  const formatMessage = (message, maxLength = 27) => {
+    const words = message.split(' ');
+    const lines = [];
+    let currentLine = '';
+  
+    words.forEach(word => {
+      // Si la palabra cabe en la línea actual, añádela
+      if (currentLine.length + word.length + 1 <= maxLength) {
+        currentLine += (currentLine ? ' ' : '') + word;
+      } else {
+        // Si no cabe, guarda la línea actual y empieza una nueva
+        lines.push(currentLine);
+        currentLine = word;
+      }
+    });
+  
+    // Añadir la última línea si no está vacía
+    if (currentLine) {
+      lines.push(currentLine);
+    }
+  
+    return lines.join('\n');
+  };
+  
+  const message = "¡Feliz cumpleaños Mami! Hicimos este proyecto Espero que te guste esto, lo hicimos con mucho cariño, que mi dios nos la bendiga hoy mañana y siempre para verle siempre con esa sonrisa tan bella que siempre tiene, gracias por ser nuestra mami y nuestra gran heroina, te amamos mami y te mandamos un gran abrazo a la distancia  y esperamos que tengaun día maravilloso lleno de alegría y sorpresas. 🎉            Att Haisslin, Deanyela y Jose.";
+  const formattedMessage = formatMessage(message);
+  
 
   return (
     <div className="App">
-      {/* Corazones animados */}
       {[...Array(10)].map((_, index) => (
         <div key={index} className={`heart ${index % 2 === 0 ? 'left' : 'right'}`}></div>
       ))}
       <header className="App-header">
-        <p className="custom-message">¡Feliz cumpleaños!</p>
-        <audio className="audio-player" controls autoPlay>
-          <source src={audioFile} type="audio/mp3" />
-        </audio>
-        <div className="image-grid">
-          {currentImages.map((img, index) => (
-            <div key={index} className="image-wrapper">
-              <img
-                src={img}
-                alt={`img${index}`}
-                className={`image-item ${visible[index] ? (firstImage ? 'show-first' : 'show') : 'hide'}`}
-              />
-            </div>
-          ))}
-        </div>
+        <p className="custom-message">¡Feliz cumpleaños Mami!</p>
       </header>
+      <audio className="audio-player" controls autoPlay>
+        <source src={audioFile} type="audio/mp3" />
+      </audio>
+      <div className="image-grid">
+        {currentImages.map((img, index) => (
+          <div key={index} className="image-wrapper">
+            <img
+              src={img}
+              alt={`img${index}`}
+              className={`image-item ${visible[index] ? (firstImage ? 'show-first' : 'show') : 'hide'}`}
+            />
+          </div>
+        ))}
+      </div>
+      <button className="envelope-button" onClick={handleShowMessage}></button>
+
+      {showMessage && (
+        <div className="overlay">
+          <div className="message-box">
+            <pre className="birthday-message">{formattedMessage}</pre>
+            <button className="close-button" onClick={handleCloseMessage}>Cerrar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

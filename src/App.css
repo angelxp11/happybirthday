@@ -1,171 +1,32 @@
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: hidden; /* Evita que el body tenga una barra de desplazamiento */
 }
 
 .App {
   text-align: center;
-  height: 100vh;
+  min-height: 100vh; /* Asegura que la aplicación ocupe al menos la altura de la ventana */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background: linear-gradient(to bottom, #f5f5dc, #d8bfd8); /* Beige to lilac gradient */
   position: relative;
+  overflow-y: auto; /* Permite que la aplicación tenga una barra de desplazamiento vertical */
+  max-width: 100vw; /* Asegura que la aplicación no exceda el ancho de la ventana */
 }
 
 .custom-message {
   font-family: 'Poppins', sans-serif;
   font-size: 30px;
   color: #8a2c77; /* Deep lilac color */
-  position: absolute; /* Use absolute positioning */
-  top: 20px; /* Adjust top spacing */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Center horizontally */
   z-index: 1;
 }
 
 .App-header {
   z-index: 1;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes moveHearts {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-.heart {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background-color: #d8bfd8; /* Lilac color */
-  animation: fadeIn 5s infinite, fadeOut 5s infinite;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-}
-
-.heart::before,
-.heart::after {
-  content: '';
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background-color: #d8bfd8; /* Lilac color */
-  border-radius: 50%;
-}
-
-.heart.right::before {
-  top: -25px;
-  left: 0;
-}
-
-.heart.right::after {
-  left: -25px;
-  top: 0;
-}
-
-.heart.left::before {
-  top: -25px;
-  left: 0;
-}
-
-.heart.left::after {
-  left: 25px;
-  top: 0;
-}
-
-/* Positioning and rotating hearts around the message */
-.heart:nth-child(1) {
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  animation-delay: 0s;
-}
-
-.heart:nth-child(2) {
-  top: 20%;
-  left: 70%;
-  transform: translate(-50%, -50%) rotate(90deg);
-  animation-delay: 2s;
-}
-
-.heart:nth-child(3) {
-  top: 40%;
-  left: 90%;
-  transform: translate(-50%, -50%) rotate(135deg);
-  animation-delay: 4s;
-}
-
-.heart:nth-child(4) {
-  top: 60%;
-  left: 90%;
-  transform: translate(-50%, -50%) rotate(180deg);
-  animation-delay: 1s;
-}
-
-.heart:nth-child(5) {
-  top: 80%;
-  left: 70%;
-  transform: translate(-50%, -50%) rotate(225deg);
-  animation-delay: 3s;
-}
-
-.heart:nth-child(6) {
-  top: 90%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(270deg);
-  animation-delay: 1.5s;
-}
-
-.heart:nth-child(7) {
-  top: 80%;
-  left: 30%;
-  transform: translate(-50%, -50%) rotate(315deg);
-  animation-delay: 3.5s;
-}
-
-.heart:nth-child(8) {
-  top: 60%;
-  left: 10%;
-  transform: translate(-50%, -50%) rotate(0deg);
-  animation-delay: 0.5s;
-}
-
-.heart:nth-child(9) {
-  top: 40%;
-  left: 10%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  animation-delay: 2.5s;
-}
-
-.heart:nth-child(10) {
-  top: 20%;
-  left: 30%;
-  transform: translate(-50%, -50%) rotate(90deg);
-  animation-delay: 4.5s;
+  margin-bottom: 20px;
 }
 
 .audio-player {
@@ -173,13 +34,10 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   width: 300px; /* Width of the player */
   padding: 10px;
-  position: absolute;
   box-sizing: border-box; /* Ensures padding does not affect width */
   transition: background 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
   background: linear-gradient(to bottom, #d8bfd8, #f5f5dc); /* Beige to lilac gradient */
-  top: 150px; /* Adjust top spacing */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Center horizontally */
+  margin-bottom: 20px; /* Add margin to separate from images */
 }
 
 .image-grid {
@@ -187,13 +45,9 @@ body {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 10px;
-  position: absolute;
-  top: 220px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-bottom: 20px; /* Margin to separate from the button */
   width: 80%;
   max-width: 800px;
-  z-index: 0; /* Make sure the images are below the hearts and text */
 }
 
 .image-wrapper {
@@ -230,4 +84,90 @@ body {
 .image-item.show-first {
   opacity: 1;
   transition: opacity 1s ease-in-out; /* Transition for the first image */
+}
+
+.envelope-button {
+  background-image: url('envelope-icon.png'); /* Path to the envelope icon */
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 40px;
+  border: none; /* Sin borde */
+  cursor: pointer;
+  margin-top: 20px; /* Margin from image grid */
+  margin-bottom: 20px; /* Margin to separate from the end of the page */
+  outline: none; /* Sin borde de enfoque */
+  background-color: transparent; /* Fondo transparente */
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.message-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 80%;
+  animation: fadeIn 1s forwards, typing 3s steps(40, end) 1s 1 normal both;
+  white-space: pre-line; /* Mantiene los saltos de línea en el texto */
+  overflow: hidden;
+  border-right: 0.15em solid orange; 
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+.birthday-message {
+  font-size: 20px;
+  color: #8a2c77; /* Deep lilac color */
+}
+
+.close-button {
+  background-color: #8a2c77;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Estilo para la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 12px; /* Ancho de la barra de desplazamiento */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Color de la pista de la barra de desplazamiento */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8a2c77; /* Color del "thumb" de la barra de desplazamiento */
+  border-radius: 10px; /* Bordes redondeados para el "thumb" */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6a1f4b; /* Color del "thumb" cuando se pasa el ratón por encima */
 }
